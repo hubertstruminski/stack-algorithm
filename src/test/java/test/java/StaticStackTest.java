@@ -1,6 +1,5 @@
 package test.java;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import codecool.*;
@@ -10,15 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class StaticStackTest {
 
-    private StaticStack staticStack;
-
-    @BeforeEach
-    void setUp() {
-        staticStack = new StaticStack(1);
-    }
+    private Integer number = 11;
 
     @Test
     void testMethodAddsElementToStack() throws StackOverflowException {
+        StaticStack<Integer> staticStack = new StaticStack<>(1);
         staticStack.push(21);
 
         assertEquals(1, staticStack.size());
@@ -26,6 +21,7 @@ class StaticStackTest {
 
     @Test
     void testIfStackIsFullThrowStackOverflowException() throws StackOverflowException {
+        StaticStack<Integer> staticStack = new StaticStack<>(1);
         staticStack.push(47);
 
         assertThrows(StackOverflowException.class, () -> {staticStack.push(17);});
@@ -33,29 +29,29 @@ class StaticStackTest {
 
     @Test
     void testStackIsEmptyThrowStackUnderflowException() {
-        StaticStack staticStack = new StaticStack(0);
+        StaticStack<Integer> staticStackX = new StaticStack<>(2);
 
-        assertThrows(StackUnderflowException.class, () -> {staticStack.pop();});
+        assertThrows(StackUnderflowException.class, () -> {staticStackX.pop();});
     }
 
     @Test
     void testMethodPopElementFromStack() throws StackOverflowException, StackUnderflowException {
-        StaticStack staticStack = new StaticStack(2);
+        StaticStack<Integer> staticStack = new StaticStack<>(2);
         staticStack.push(24);
         staticStack.push(11);
 
-
-        assertEquals(11, staticStack.pop());
+        assertEquals(number, staticStack.pop());
         assertEquals(1, staticStack.size());
     }
 
     @Test
     void testMethodPeekReturnLastElement() throws StackOverflowException, StackUnderflowException {
-        StaticStack staticStack = new StaticStack(2);
-        staticStack.push(4);
-        staticStack.push(9);
+        StaticStack<Integer> staticStack = new StaticStack<>(2);
 
-        assertEquals(9, staticStack.peek());
+        staticStack.push(4);
+        staticStack.push(11);
+
+        assertEquals(number, staticStack.peek());
     }
 
 

@@ -5,14 +5,15 @@ import java.util.List;
 
 public class StaticStack<T> {
 
-    private static int[] array;
-    private static int index = 0;
+    private T[] array;
+    private int index = 0;
+    private T[] result;
 
     public StaticStack(int size) {
-        array = new int[size];
+        array = (T[]) new Object[size];
     }
 
-    public void push(int value) throws StackOverflowException {
+    public void push(T value) throws StackOverflowException {
         if(index >= array.length) {
             throw new StackOverflowException("Stack is full");
         }
@@ -23,30 +24,35 @@ public class StaticStack<T> {
         return array.length;
     }
 
-    public int pop() throws StackUnderflowException {
-        List<Integer> element = new ArrayList<>();
-
-        if(array.length == 0) {
-            throw new StackUnderflowException("Stack is empty");
+    public T pop() throws StackUnderflowException {
+        int count = 0;
+        for(int i=0; i<array.length; i++) {
+            if(array[i] == null) {
+                count++;
+            }
+            if(count == array.length - 1) {
+                throw new StackUnderflowException("Stack is empty");
+            }
         }
-        int[] result = new int[array.length - 1];
+        List<T> element = new ArrayList<>();
+
+        result = (T[]) new Object[array.length - 1];
         for(int i=0; i<array.length-2; i++) {
             result[i] = array[i];
         }
         element.add(array[array.length-1]);
+
         array = result;
 
         return element.get(0);
     }
 
-    public int peek() throws StackUnderflowException {
+    public T peek() throws StackUnderflowException {
         if(array.length == 0) {
             throw new StackUnderflowException("Stack is empty");
         }
         return array[array.length - 1];
     }
-
-
 
     @Override
     public String toString() {
